@@ -28,3 +28,19 @@ assert_vars() {
         fi
     done
 }
+
+assert_assoc_array() {
+    # Assert, that associative array is declared
+    # Arguments:
+    #  $1 - Name of array to check
+
+    case "$(declare -p "$1" 2> /dev/null)" in
+        'declare -A '*)
+            return 0
+            ;;
+        *)
+            backtrace "'$1' is not defined as a associative array"
+            return 1
+            ;;
+    esac
+}
